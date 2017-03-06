@@ -13,6 +13,11 @@
     </button>
     </ion-buttons>
     <ion-title>{{action}} ученика</ion-title>
+    <ion-buttons end *ngIf="!isNew">
+      <button ion-button icon-only color="danger" (click)="deletes()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      </ion-buttons>
   </ion-toolbar>
 
 </ion-header>

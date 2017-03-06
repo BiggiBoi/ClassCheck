@@ -21,16 +21,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-item-sliding *ngFor ="let names of studentList">
-      <ion-item>
-        <h2>1| {{names.soname}} {{names.name}}</h2>
+  <ion-list *ngFor ="let names of studentList">
+      <ion-item (click)="edit(names)">
+        {{names._index}}) {{names.soname}} {{names.name}}
       </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="secondary" (click)="edit(names)"><ion-icon name="trash"></ion-icon>Изменить</button>
-        <button ion-button color="danger" (click)="deletes(names)"><ion-icon name="trash"></ion-icon>Удалить</button>
-      </ion-item-options>
-    </ion-item-sliding>
   </ion-list>
 
 </ion-content>

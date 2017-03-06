@@ -3,10 +3,17 @@
 	<button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Ionic Blank</ion-title>
+    <ion-title>
+        начало
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   The world is your oyster.
+  <p>{{myDate | date:'d/MM/y'}}</p>
+    <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item>
 </ion-content>

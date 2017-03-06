@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, ViewController} from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
-import { ViewClassPage } from '../../pages/view-class/view-class';
 
 /*
  Generated class for the ViewClass page.
@@ -25,7 +24,7 @@ export class AddStudentPage {
     public Service: ClassCheckService ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ViewClassPage');
+    console.log('ionViewDidLoad AddStudentPage');
      let editStudent = this.navParams.get('student');
 
      if (editStudent){
@@ -45,15 +44,15 @@ export class AddStudentPage {
     this.dismiss();
   }
 
-  //if (this.student.name !== '') {
-  //this.Service.updateStudent(this.student)
-  // .catch(console.error.bind(console));
-  //}
-
-  dismiss() {
-    this.navCtrl.setRoot(ViewClassPage);
+  deletes() {
+    if (!this.isNew) {
+      this.Service.deleteStudent(this.student)
+          .catch(console.error.bind(console));
+    }
+    this.dismiss();
+  }
+  dismiss():void{
     this.viewCtrl.dismiss(this.student);
-
   }
 
 }
