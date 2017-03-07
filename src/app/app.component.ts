@@ -24,7 +24,7 @@ export class MyApp {
     });
 
 	this.pages = [
-	{title:'HomePage', component:HomePage},
+	{title:'Посещаемость', component:HomePage},
 	{title:'Список класса', component:ViewClassPage}
 	];
 

@@ -13,9 +13,9 @@ import { ClassCheckService } from '../../providers/class-check';
   templateUrl: 'add-student.html'
 })
 export class AddStudentPage {
-  public student:any = {};
-  public isNew:boolean = true;
-  public action:string = 'Добавить';
+  private student:any = {};
+  private isNew:boolean = true;
+  private action:string = 'Добавить';
 
   constructor(
     public navCtrl: NavController,

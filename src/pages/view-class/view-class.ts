@@ -14,8 +14,7 @@ import { Student } from '../../providers/student';
   templateUrl: 'view-class.html'
 })
 export class ViewClassPage {
-  public student = {name: '', soname:''};
-  public studentList:Student[];
+  private studentList:Student[];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -25,7 +24,6 @@ export class ViewClassPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ViewClassPage');
     this.Service.initDB();
     this.getAllStudent();
   }
@@ -39,7 +37,6 @@ export class ViewClassPage {
     this.Service.getAllStudent()
       .then(data => {this.zone.run(() => {
         this.studentList = data;
-          console.log (this.studentList);
       })
     }).catch(console.error.bind(console));
   }

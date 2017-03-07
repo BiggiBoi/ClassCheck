@@ -10,39 +10,42 @@ import { Student } from '../../providers/student';
 })
 export class HomePage {
   public myDate:any = new Date().toISOString();
-  private studentList:Student[];
-  private inClass:Student[]=[];
+  private outClass:Student[];
+  private inClass:Student[];
+  private tempIn=[];
+  private tempOut=[];
 
-  constructor(public navCtrl: NavController, public Service: ClassCheckService) {}
+  constructor(
+    public navCtrl: NavController,
+    private zone:NgZone,
+    private Service: ClassCheckService) {}
 
   ionViewDidLoad() {
     this.Service.initDB();
-    this.getAllStudent();
+    this.getList();
   }
 
   selectItem(item:any) {
-    this.inClass.push(item);
-    this.studentList.splice(this.findIndex(this.studentList,item),1);
+    this.tempIn.push(item);
+    this.inClass = this.Service.studentSort(this.tempIn);
+    this.outClass.splice(this.Service.findIndex(this.outClass,item),1);
+    this.tempOut = this.outClass;
+    this.Service.studentSort(this.outClass);
   }
 
   returnItem(item:any){
-    this.studentList.push(item);
-    this.inClass.splice(this.findIndex(this.inClass, item),1);
+    this.tempOut.push(item);
+    this.outClass = this.Service.studentSort(this.tempOut);
+    this.inClass.splice(this.Service.findIndex(this.inClass, item),1);
+    this.tempIn = this.inClass;
+    this.Service.studentSort(this.outClass);
   }
 
-  getAllStudent() {
-    this.Service.getAllStudent()
-      .then(data => {this.zone.run(() => {
-        this.studentList = data;
-      })
+  getList() {
+    this.Service.getList()
+      .then(data=>{
+        this.outClass = data;
       }).catch(console.error.bind(console));
-  }
-
-  private findIndex(array:any,item:any){
-    let index = array.findIndex(e => {
-      return e._id == item._id;
-    });
-    return index;
   }
 
 }

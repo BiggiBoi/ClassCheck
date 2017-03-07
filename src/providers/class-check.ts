@@ -6,6 +6,7 @@ import { Student } from '../providers/student';
 export class ClassCheckService {
 	private _db;
 	public _student: Student[];
+	public _List:Student[];
 
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
@@ -23,6 +24,17 @@ export class ClassCheckService {
 		return this._db.remove(student)
 	}
 
+  getList(){
+      return this._db.allDocs({include_docs: true})
+        .then(doc => {
+          this._List = doc.rows.map(row => {
+            return row.doc;
+          });
+          this.studentSort(this._List);
+          return this._List;
+        })
+  }
+
 	getAllStudent(){
 	  if (!this._student) {
       return this._db.allDocs({include_docs: true})
@@ -34,8 +46,7 @@ export class ClassCheckService {
           this._db.changes({live:true, since:'now', include_docs:true})
             .on('change', this.onDatabaseChange);
 
-          this.studentSort();
-          this.addIndex();
+          this.studentSort(this._student);
           return this._student;
         });
     } else {
@@ -50,43 +61,35 @@ export class ClassCheckService {
 		if (change.deleted) {
 			if (student) {
 				this._student.splice(index, 1); // delete
-                this.addIndex();
 			}
 		} else {
 			if (student && student._id === change.id) {
 				this._student[index] = change.doc; // update
-                this.studentSort();
-                this.addIndex();
+        this.studentSort(this._student);
 			} else {
 				this._student.splice(index, 0, change.doc);// insert
-                this.studentSort();
-                this.addIndex();
+        this.studentSort(this._student);
 			}
 		}
 	};
 
-	private findIndex(array, id) {
-		let low = 0, high = array.length, mid;
-		while (low < high) {
-			mid = (low + high) >>> 1;
-			array[mid]._id < id ? low = mid + 1 : high = mid
-		}
-		return low;
-	};
+  findIndex(array:any,item:any){
+    let index = array.findIndex(e => {
+      return e._id == item._id;
+    });
+    return index;
+  }
 
-	private addIndex(){
-		console.log (this._student);
-		for (let i = 0; i < this._student.length; i++) {
-			this._student[i]._index = i+1;
-		}
-	}
-
-	private studentSort(){
-        this._student.sort(function (a,b) {
+	studentSort(array:any){
+       let ar =  array.sort(function (a,b) {
             if (a.soname < b.soname){return -1}
             if (a.soname > b.soname){return 1}
             return 0;
         });
+    for (let i = 0; i < ar.length; i++) {
+      ar[i]._index = i+1;
+    }
+       return ar;
     }
 
 }

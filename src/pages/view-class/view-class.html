@@ -21,8 +21,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor ="let names of studentList">
-      <ion-item (click)="edit(names)">
+  <ion-list>
+      <ion-item *ngFor ="let names of studentList" (click)="edit(names)">
         {{names._index}}) {{names.soname}} {{names.name}}
       </ion-item>
   </ion-list>

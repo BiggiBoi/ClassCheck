@@ -3,24 +3,20 @@
 	<button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>
-        начало
-    </ion-title>
+    <ion-title>Посещаемость</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-list-header>Отсутствуют</ion-list-header>
-    <ion-item *ngFor="let student of studentList">
-      <span (click)="selectItem(student)">{{student._index}}){{student.soname}} {{student.name}}</span>
+    <ion-list-header><h1>Отсутствуют</h1></ion-list-header>
+    <ion-item *ngFor="let student of outClass" (click)="selectItem(student)">
+      {{student._index}}){{student.soname}} {{student.name}}
     </ion-item>
-  </ion-list>
 
-  <ion-list >
-    <ion-list-header>Присутствуют</ion-list-header>
-    <ion-item *ngFor="let s of inClass">
-      <span (click)="returnItem(s)">{{s._index}}){{s.soname}} {{s.name}}</span>
+    <ion-list-header><h1>Присутствуют</h1></ion-list-header>
+    <ion-item *ngFor="let s of inClass" (click)="returnItem(s)">
+      {{s._index}}){{s.soname}} {{s.name}}
     </ion-item>
   </ion-list>
 </ion-content>
