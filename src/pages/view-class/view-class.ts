@@ -2,7 +2,7 @@ import {Component, NgZone} from '@angular/core';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
 import { AddStudentPage } from '../../pages/add-student/add-student';
-import { Student } from '../../providers/student';
+import { Pupil } from '../../providers/pupil';
 /*
  Generated class for the AddStudent page.
 
@@ -14,7 +14,7 @@ import { Student } from '../../providers/student';
   templateUrl: 'view-class.html'
 })
 export class ViewClassPage {
-  private studentList:Student[];
+  private classList:Pupil;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -25,19 +25,20 @@ export class ViewClassPage {
 
   ionViewDidLoad() {
     this.Service.initDB();
-    this.getAllStudent();
+    //this.getAllStudent();
+    this.getPupil();
   }
 
   edit(student:any) {
-    let modal = this.modalCtrl.create(AddStudentPage,{student:student});
+    let modal = this.modalCtrl.create(AddStudentPage,{pupil:student});
     modal.present();
   }
 
-  getAllStudent() {
-    this.Service.getAllStudent()
-      .then(data => {this.zone.run(() => {
-        this.studentList = data;
+  getPupil(){
+    this.Service.getPupil()
+      .then(data=>{this.zone.run(() => {
+        this.classList=data;
       })
-    }).catch(console.error.bind(console));
+    }).catch(console.error.bind(console))
   }
 }

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as PouchDB from 'pouchdb';
 import { Student } from '../providers/student';
+import { Pupil } from '../providers/pupil';
 
 @Injectable()
 export class ClassCheckService {
 	private _db;
-	public _student: Student[];
+	public _student:Student[];
 	public _List:Student[];
+  public classList:Pupil= new Pupil();
 
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
@@ -24,6 +26,29 @@ export class ClassCheckService {
 		return this._db.remove(student)
 	}
 
+  addPupil(pupil:any){
+    if (this.classList._id === undefined){
+      this.classList._id='classlist'
+    };
+    pupil.id = (this.classList.pupil.length)+1;
+    this.classList.pupil.push(pupil);
+    this._db.put(this.classList);
+  }
+
+  updatePupil(pupil:any){
+
+  }
+
+  getPupil(){
+   return this._db.allDocs({include_docs:true, key: 'classlist'})
+     .then(data=>{
+       data.rows.forEach(docs=>{
+         this.classList=docs.doc;
+       });
+       return this.classList;
+     })
+  }
+
   getList(){
       return this._db.allDocs({include_docs: true})
         .then(doc => {
@@ -34,7 +59,6 @@ export class ClassCheckService {
           return this._List;
         })
   }
-
 	getAllStudent(){
 	  if (!this._student) {
       return this._db.allDocs({include_docs: true})
@@ -72,6 +96,14 @@ export class ClassCheckService {
 			}
 		}
 	};
+
+  private onChange = (change) => {
+    if (change.deleted) {
+      console.log('deleted', change)
+    }else {
+      console.log('add', change)
+    }
+  };
 
   findIndex(array:any,item:any){
     let index = array.findIndex(e => {

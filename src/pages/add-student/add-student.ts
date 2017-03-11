@@ -13,7 +13,7 @@ import { ClassCheckService } from '../../providers/class-check';
   templateUrl: 'add-student.html'
 })
 export class AddStudentPage {
-  private student:any = {};
+  private pupil:any = {};
   private isNew:boolean = true;
   private action:string = 'Добавить';
 
@@ -24,35 +24,34 @@ export class AddStudentPage {
     public Service: ClassCheckService ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddStudentPage');
-     let editStudent = this.navParams.get('student');
+     let editStudent = this.navParams.get('pupil');
 
      if (editStudent){
        this.action = 'Изменить';
        this.isNew = false;
-       this.student = editStudent;
-       console.log(this.student);
+       this.pupil = editStudent;
      }
   }
 
   save() {
     if (this.isNew) {
-      this.Service.addStudent(this.student);
+      console.log(this.pupil);
+      this.Service.addPupil(this.pupil);
     } else {
-      this.Service.updateStudent(this.student);
+      //this.Service.updateStudent(this.student);
     }
     this.dismiss();
   }
 
   deletes() {
     if (!this.isNew) {
-      this.Service.deleteStudent(this.student)
+      this.Service.deleteStudent(this.pupil)
           .catch(console.error.bind(console));
     }
     this.dismiss();
   }
   dismiss():void{
-    this.viewCtrl.dismiss(this.student);
+    this.viewCtrl.dismiss(this.pupil);
   }
 
 }
