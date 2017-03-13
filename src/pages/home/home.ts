@@ -22,30 +22,24 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.Service.initDB();
-    this.getList();
+
   }
 
   selectItem(item:any) {
-    this.tempIn.push(item);
+    /*this.tempIn.push(item);
     this.inClass = this.Service.studentSort(this.tempIn);
     this.outClass.splice(this.Service.findIndex(this.outClass,item),1);
     this.tempOut = this.outClass;
-    this.Service.studentSort(this.outClass);
+    this.Service.studentSort(this.outClass);*/
   }
 
-  returnItem(item:any){
+  returnItem(item:any){/*
     this.tempOut.push(item);
     this.outClass = this.Service.studentSort(this.tempOut);
     this.inClass.splice(this.Service.findIndex(this.inClass, item),1);
     this.tempIn = this.inClass;
-    this.Service.studentSort(this.outClass);
+    this.Service.studentSort(this.outClass);*/
   }
 
-  getList() {
-    this.Service.getList()
-      .then(data=>{
-        this.outClass = data;
-      }).catch(console.error.bind(console));
-  }
 
 }

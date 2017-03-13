@@ -35,18 +35,16 @@ export class AddStudentPage {
 
   save() {
     if (this.isNew) {
-      console.log(this.pupil);
       this.Service.addPupil(this.pupil);
     } else {
-      //this.Service.updateStudent(this.student);
+      this.Service.updatePupil(this.pupil);
     }
     this.dismiss();
   }
 
   deletes() {
     if (!this.isNew) {
-      this.Service.deleteStudent(this.pupil)
-          .catch(console.error.bind(console));
+      this.Service.deletePupil(this.pupil)
     }
     this.dismiss();
   }

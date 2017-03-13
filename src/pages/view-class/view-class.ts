@@ -25,7 +25,6 @@ export class ViewClassPage {
 
   ionViewDidLoad() {
     this.Service.initDB();
-    //this.getAllStudent();
     this.getPupil();
   }
 
@@ -37,6 +36,7 @@ export class ViewClassPage {
   getPupil(){
     this.Service.getPupil()
       .then(data=>{this.zone.run(() => {
+        this.Service.pupilSort(data.pupil);
         this.classList=data;
       })
     }).catch(console.error.bind(console))

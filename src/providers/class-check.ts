@@ -32,11 +32,22 @@ export class ClassCheckService {
     };
     pupil.id = (this.classList.pupil.length)+1;
     this.classList.pupil.push(pupil);
+    this.pupilSort(this.classList.pupil);
     this._db.put(this.classList);
   }
 
   updatePupil(pupil:any){
+    let index = this.findIndex(this.classList.pupil, pupil);
+    this.classList.pupil[index]=pupil;
+    this.pupilSort(this.classList.pupil);
+    this._db.put(this.classList);
+  }
 
+  deletePupil(pupil:any){
+    let index = this.findIndex(this.classList.pupil, pupil);
+    this.classList.pupil.splice(index,1);
+    this.pupilSort(this.classList.pupil);
+    this._db.put(this.classList);
   }
 
   getPupil(){
@@ -45,20 +56,14 @@ export class ClassCheckService {
        data.rows.forEach(docs=>{
          this.classList=docs.doc;
        });
+       this._db.changes({live:true, since:'now', doc_ids:['classlist']})
+         .on('change', (change)=>{
+           this.classList._rev= change.changes[0].rev;
+         });
        return this.classList;
      })
   }
 
-  getList(){
-      return this._db.allDocs({include_docs: true})
-        .then(doc => {
-          this._List = doc.rows.map(row => {
-            return row.doc;
-          });
-          this.studentSort(this._List);
-          return this._List;
-        })
-  }
 	getAllStudent(){
 	  if (!this._student) {
       return this._db.allDocs({include_docs: true})
@@ -70,7 +75,7 @@ export class ClassCheckService {
           this._db.changes({live:true, since:'now', include_docs:true})
             .on('change', this.onDatabaseChange);
 
-          this.studentSort(this._student);
+          //this.studentSort(this._student);
           return this._student;
         });
     } else {
@@ -89,38 +94,27 @@ export class ClassCheckService {
 		} else {
 			if (student && student._id === change.id) {
 				this._student[index] = change.doc; // update
-        this.studentSort(this._student);
+        //this.studentSort(this._student);
 			} else {
 				this._student.splice(index, 0, change.doc);// insert
-        this.studentSort(this._student);
+        //this.studentSort(this._student);
 			}
 		}
 	};
 
-  private onChange = (change) => {
-    if (change.deleted) {
-      console.log('deleted', change)
-    }else {
-      console.log('add', change)
-    }
-  };
-
   findIndex(array:any,item:any){
     let index = array.findIndex(e => {
-      return e._id == item._id;
+      return e.id == item.id;
     });
     return index;
   }
 
-	studentSort(array:any){
+	pupilSort(array:any){
        let ar =  array.sort(function (a,b) {
-            if (a.soname < b.soname){return -1}
-            if (a.soname > b.soname){return 1}
+            if (a.lastName < b.lastName){return -1}
+            if (a.lastName > b.lastName){return 1}
             return 0;
         });
-    for (let i = 0; i < ar.length; i++) {
-      ar[i]._index = i+1;
-    }
        return ar;
     }
 

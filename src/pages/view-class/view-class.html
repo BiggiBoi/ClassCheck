@@ -22,8 +22,8 @@
 
 <ion-content padding>
   <ion-list *ngIf="classList">
-      <ion-item *ngFor ="let names of classList.pupil" (click)="edit(names)">
-       {{names.id}}) {{names.lastName}} {{names.firstName}}
+      <ion-item *ngFor ="let names of classList.pupil; let i = index" (click)="edit(names)">
+       {{i+1}}) {{names.lastName}} {{names.firstName}}
       </ion-item>
   </ion-list>
 
