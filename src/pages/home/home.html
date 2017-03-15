@@ -8,15 +8,26 @@
 </ion-header>
 
 <ion-content padding>
+<ion-item>
+    <ion-label>Выбрать дату</ion-label>
+    <ion-datetime 
+      displayFormat="DD MMMM YYYY"
+      cancelText="отмена"
+      doneText="принять"
+      min="2017"
+      monthNames="январь, февраль, март, апрель, май, июнь, июль, август, сентябрь, октябрь, ноябрь, декабрь"
+      (ionChange)="onChange()"
+      [(ngModel)]="date"></ion-datetime>
+  </ion-item>
   <ion-list>
     <ion-list-header><h1>Отсутствуют</h1></ion-list-header>
-    <ion-item *ngFor="let student of outClass" (click)="selectItem(student)">
-      {{student._index}}){{student.soname}} {{student.name}}
+    <ion-item *ngFor="let out of outClass; let i = index" (click)="selectItem(out)">
+      {{i+1}}){{out.lastName}} {{out.firstName}}
     </ion-item>
 
     <ion-list-header><h1>Присутствуют</h1></ion-list-header>
-    <ion-item *ngFor="let s of inClass" (click)="returnItem(s)">
-      {{s._index}}){{s.soname}} {{s.name}}
+    <ion-item *ngFor="let in of inClass; let i = index" (click)="returnItem(in)">
+      {{i+1}}){{in.lastName}} {{in.firstName}}
     </ion-item>
   </ion-list>
 </ion-content>

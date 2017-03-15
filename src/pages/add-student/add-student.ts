@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NavController, NavParams, ViewController} from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
 
@@ -16,12 +17,20 @@ export class AddStudentPage {
   private pupil:any = {};
   private isNew:boolean = true;
   private action:string = 'Добавить';
+  form: FormGroup;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public Service: ClassCheckService ) {}
+    public Service: ClassCheckService,
+    public formBuilder: FormBuilder ) {
+    this.form = formBuilder.group({
+     "lastName":["",[Validators.required,Validators.pattern("[а-яЁёА-Я]*")]],
+    "firstName":["",[Validators.required,Validators.pattern("[а-яЁёА-Я]*")]],
+    "id":[""]
+    })
+  }
 
   ionViewDidLoad() {
      let editStudent = this.navParams.get('pupil');
@@ -29,17 +38,10 @@ export class AddStudentPage {
      if (editStudent){
        this.action = 'Изменить';
        this.isNew = false;
-       this.pupil = editStudent;
+       this.form.controls['lastName'].setValue(editStudent.lastName);
+       this.form.controls['firstName'].setValue(editStudent.firstName);
+       this.form.controls['id'].setValue(editStudent.id);
      }
-  }
-
-  save() {
-    if (this.isNew) {
-      this.Service.addPupil(this.pupil);
-    } else {
-      this.Service.updatePupil(this.pupil);
-    }
-    this.dismiss();
   }
 
   deletes() {
@@ -50,6 +52,16 @@ export class AddStudentPage {
   }
   dismiss():void{
     this.viewCtrl.dismiss(this.pupil);
+  }
+  onSubmit(){
+    if (this.form.valid){
+      if (this.isNew) {
+      this.Service.addPupil(this.form.value);
+    } else {
+      this.Service.updatePupil(this.form.value);
+    }
+    this.dismiss();
+  }
   }
 
 }

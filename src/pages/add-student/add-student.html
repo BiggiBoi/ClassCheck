@@ -24,15 +24,19 @@
 
 
 <ion-content padding>
-  <ion-item>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <ion-item>
     <ion-label floating>Фамилия</ion-label>
-    <ion-input type="text" value="" [(ngModel)]="pupil.lastName"></ion-input>
+    <ion-input type="text" value="" formControlName="lastName"></ion-input>
   </ion-item>
+  <div class="danger" *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">допустимы русские буквы без пробелов</div>
   <ion-item>
     <ion-label floating>Имя</ion-label>
-    <ion-input type="text" value="" [(ngModel)]="pupil.firstName"></ion-input>
+    <ion-input type="text" value="" formControlName="firstName"></ion-input>
   </ion-item>
-  <ion-buttons right="">
-    <button ion-button right (click)="save()">{{action}}</button>
+  <div class="danger" *ngIf="form.controls['lastName'].invalid && form.controls['firstName'].touched">допустимы русские буквы без пробелов</div>
+  <ion-buttons right>
+    <button ion-button [disabled]="!form.valid">{{action}}</button>
   </ion-buttons>
+  </form>
 </ion-content>

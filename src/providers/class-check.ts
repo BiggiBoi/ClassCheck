@@ -9,6 +9,7 @@ export class ClassCheckService {
 	public _student:Student[];
 	public _List:Student[];
   public classList:Pupil= new Pupil();
+  public classListToHome:Pupil = new Pupil();
 
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
@@ -64,6 +65,32 @@ export class ClassCheckService {
      })
   }
 
+  findIndex(array:any,item:any){
+    let index = array.findIndex(e => {
+      return e.id == item.id;
+    });
+    return index;
+  }
+
+  pupilSort(array:any){
+       let ar =  array.sort(function (a,b) {
+            if (a.lastName < b.lastName){return -1}
+            if (a.lastName > b.lastName){return 1}
+            return 0;
+        });
+       return ar;
+    }
+
+  getList(){
+    return this._db.allDocs({include_docs:true,key: 'classlist'})
+      .then(data=>{
+        data.rows.forEach(docs=>{
+          this.classListToHome = docs.doc.pupil
+        });
+        return this.classListToHome;
+      })
+  }
+
 	getAllStudent(){
 	  if (!this._student) {
       return this._db.allDocs({include_docs: true})
@@ -101,21 +128,5 @@ export class ClassCheckService {
 			}
 		}
 	};
-
-  findIndex(array:any,item:any){
-    let index = array.findIndex(e => {
-      return e.id == item.id;
-    });
-    return index;
-  }
-
-	pupilSort(array:any){
-       let ar =  array.sort(function (a,b) {
-            if (a.lastName < b.lastName){return -1}
-            if (a.lastName > b.lastName){return 1}
-            return 0;
-        });
-       return ar;
-    }
 
 }
