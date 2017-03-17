@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as PouchDB from 'pouchdb';
-import { Pupil } from '../providers/pupil';
+import { ClassList } from '../providers/classlist';
+import { Attendance } from '../providers/attendance';
 
 @Injectable()
 export class ClassCheckService {
 	private _db;
-  private class:Pupil= new Pupil();
-  private classList:Pupil=new Pupil();
-  public attendance:any;
+  private class:ClassList = new ClassList();
+  private classList:ClassList = new ClassList();
+  public attendance:Attendance = new Attendance();
 
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
@@ -80,22 +81,31 @@ export class ClassCheckService {
 	attendanceToday(key:string){
     return this._db.allDocs({include_docs:true,key: key})
       .then(data=>{
+		if (data.rows.length > 0) {
         data.rows.forEach(docs=>{
           this.attendance = docs.doc
         });
+		} else {
+			this.attendance = null
+		}
+		this._db.changes({live:true, since:'now', doc_ids:[key]})
+         .on('change', (change)=>{
+           this.attendance._rev= change.changes[0].rev;
+         });
         return this.attendance
       })
   }
 
-  saveAttend(_id:string, outClass:any[], inClass:any[]){
-    let attend:any = {};
-    attend._id = _id;
-    if(this.attendance._rev !== undefined){
-      attend._rev = this.attendance._rev
-    }
-    attend.outClass = outClass;
-    attend.inClass = inClass;
-    this._db.put(attend);
-  }
+	saveAttend(_id:string, date:string, outClass:any[], inClass:any[]){
+		let attend:any = {};
+		attend._id = _id;
+		attend.date = date;
+		if(this.attendance._rev !== undefined){
+		  attend._rev = this.attendance._rev
+		}
+		attend.outClass = outClass;
+		attend.inClass = inClass;
+		this._db.put(attend);
+	}
 
 }

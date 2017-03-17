@@ -1,4 +1,4 @@
-export class Pupil {
+export class ClassList {
 	_id:string;
 	_rev:string;
 	pupil:any[] = [];

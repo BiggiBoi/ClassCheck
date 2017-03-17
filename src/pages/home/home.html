@@ -8,31 +8,28 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <ion-card *ngIf="isCreate">
     <ion-card-content>
     <ion-grid>
       <ion-row>
         <ion-col width-67 center>Записей не найдено</ion-col>
         <ion-col width-33>
           <ion-buttons right>
-            <button ion-button clear (click)="loadData()">Создать</button>
+            <button ion-button clear (click)="loadClassList()">Создать</button>
           </ion-buttons>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card-content>
   </ion-card>
-  <ion-card>
+  <ion-card *ngIf="!isCreate">
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col width-50>
-            <ion-buttons left>
-              <button ion-button clear (click)="setEdit()" color="yellow">Редактировать</button>
-            </ion-buttons>
-          </ion-col>
+          <ion-col width-50 center>{{localeDate}}</ion-col>
           <ion-col width-50>
             <ion-buttons right>
+              <button ion-button clear (click)="setEdit()" color="energized" *ngIf="isSave">Редактировать</button>
               <button ion-button clear (click)="saveAttend()" color="secondary">Сохранить</button>
             </ion-buttons>
           </ion-col>
@@ -40,7 +37,7 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <ion-list>
+  <ion-list *ngIf="!isCreate">
     <ion-list-header><h1>Отсутствуют</h1></ion-list-header>
     <ion-item *ngFor="let out of outClass; let i = index" (click)="selectItem(out)">
       {{i+1}}){{out.lastName}} {{out.firstName}}

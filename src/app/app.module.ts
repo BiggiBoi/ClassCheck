@@ -5,13 +5,15 @@ import { HomePage } from '../pages/home/home';
 import {ViewClassPage} from '../pages/view-class/view-class';
 import { AddStudentPage } from '../pages/add-student/add-student';
 import { ClassCheckService } from '../providers/class-check';
+import { HistoryPage } from '../pages/history/history';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ViewClassPage,
-  	AddStudentPage
+  	AddStudentPage,
+	HistoryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -21,7 +23,8 @@ import { ClassCheckService } from '../providers/class-check';
     MyApp,
     HomePage,
     ViewClassPage,
-	  AddStudentPage
+	AddStudentPage,
+	HistoryPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ClassCheckService]
 })

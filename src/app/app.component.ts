@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 import { ViewClassPage } from '../pages/view-class/view-class';
+import { HistoryPage } from '../pages/history/history';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,6 +26,7 @@ export class MyApp {
 
 	this.pages = [
 	{title:'Посещаемость', component:HomePage},
+	{title:'История', component:HistoryPage},
 	{title:'Список класса', component:ViewClassPage}
 	];
 

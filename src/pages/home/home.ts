@@ -8,15 +8,16 @@ import { ClassCheckService } from '../../providers/class-check';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public date:any;
+  public Date:any;
   private dates:any;
+  private localeDate:any;
   private outClass:any[];
   private inClass:any[];
-  private tempIn=[];
-  private tempOut=[];
+  private tempIn:any=[];
+  private tempOut:any=[];
   private isCreate:boolean = true;
+  private isSave:boolean = false;
   private isEdit:boolean = true;
-  private UnlockBotton:boolean;
 
 
   constructor(
@@ -25,55 +26,68 @@ export class HomePage {
     private Service: ClassCheckService) {}
 
   ionViewDidLoad() {
-    this.date = new Date().toISOString();
-    this.dates = this.date.split('T');
+    this.Date = new Date().toISOString();
+    this.dates = this.splitDate();
+    this.localeDate = new Date().toLocaleString("ru", {weekday: 'long',month: 'long', day: 'numeric'});
     this.Service.initDB();
-    this.visitToday();
+    this.loadData();
   }
 
   selectItem(item:any) {
-    this.tempIn.push(item);
-    this.inClass = this.Service.pupilSort(this.tempIn);
-    this.outClass.splice(this.Service.findIndex(this.outClass,item),1);
-    this.tempOut = this.outClass;
-    this.Service.pupilSort(this.outClass);
+    if (this.isEdit) {
+      this.tempIn.push(item);
+      this.inClass = this.Service.pupilSort(this.tempIn);
+      this.outClass.splice(this.Service.findIndex(this.outClass, item), 1);
+      this.tempOut = this.outClass;
+      this.Service.pupilSort(this.outClass);
+    }
   }
 
   returnItem(item:any){
-    this.tempOut.push(item);
-    this.outClass = this.Service.pupilSort(this.tempOut);
-    this.inClass.splice(this.Service.findIndex(this.inClass, item),1);
-    this.tempIn = this.inClass;
-    this.Service.pupilSort(this.outClass);
+    if (this.isEdit) {
+      this.tempOut.push(item);
+      this.outClass = this.Service.pupilSort(this.tempOut);
+      this.inClass.splice(this.Service.findIndex(this.inClass, item), 1);
+      this.tempIn = this.inClass;
+      this.Service.pupilSort(this.outClass);
+    }
   }
 
-  loadData(){
+  loadClassList(){
     this.Service.getClassList().then(data=>{
       this.outClass=data;
-      this.isEdit = true;
+      this.isCreate = false;
     }).catch(console.error.bind(console))
   }
 
-  visitToday(){
-    let today = this.dates[0];
-    this.Service.attendanceToday(today).then(data=>{
+  loadData(){
+    this.Service.attendanceToday(this.dates).then(data=>{
       this.outClass=data.outClass;
       this.tempOut=data.outClass;
       this.inClass =data.inClass;
       this.tempIn= data.inClass;
 
-      if(this.dates[0] == data._id){
+      if(this.dates == data._id){
         this.isCreate = false;
+        this.isSave = true;
         this.isEdit = false;
       }
     }).catch(console.error.bind(console))
   }
 
   saveAttend(){
-    this.Service.saveAttend(this.dates[0],this.outClass, this.inClass);
+    this.Service.saveAttend(this.dates,this.localeDate,this.outClass, this.inClass);
+    this.isEdit = false;
+	this.isSave = true;
+	
   }
 
   setEdit(){
     this.isEdit = true;
+  }
+  
+  private splitDate(){
+	let temp = this.Date.split('T');
+	return temp[0];
   }
 }
