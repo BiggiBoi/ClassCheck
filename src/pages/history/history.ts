@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
-
 @Component({
   selector: 'page-history',
   templateUrl: 'history.html'
@@ -14,23 +13,22 @@ export class HistoryPage {
 	private outClass:any[];
 	private isNull:boolean=true;
 	private message:string;
-	
+
 
   constructor(
 	public navCtrl: NavController,
-	public navParams: NavParams,
 	private Service:ClassCheckService
 	) {}
 
   ionViewDidLoad() {
     this.Date= new Date().toISOString();
-	this.maxDate = this.splitDate();
-	this.Service.initDB();	
-	this.selectDate()
+    this.maxDate = this.splitDate();
+    this.Service.initDB();
+    this.selectDate()
   }
 
   selectDate(){
-	this.dates = this.splitDate();
+	  this.dates = this.splitDate();
     this.Service.attendanceToday(this.dates).then(data=>{
 		if(data !== null) {
 			if (data.outClass.length > 0) {
@@ -46,12 +44,11 @@ export class HistoryPage {
 			this.message = 'В этот день пропуски не отмечались'
 		}
     }).catch(console.error.bind(console))
-	
   }
-  
+
   private splitDate(){
 	let temp = this.Date.split('T');
 	return temp[0];
   }
-  
+
 }

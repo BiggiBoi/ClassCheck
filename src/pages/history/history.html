@@ -1,42 +1,31 @@
-<!--
-  Generated template for the History page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>История пропусков</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 	<ion-card>
 		<ion-card-content>
 			<ion-item>
 			  <ion-label>Выбрать дату</ion-label>
-			  <ion-datetime 
-				displayFormat="DD MMMM YYYY"
-				cancelText='Отмена'
-				doneText='Готово'
-				min='2017'
-				max={{maxDate}}
-				monthNames="января, февраля, марта, апреля, мая, июня, июля, августа, сентября, октября, ноября, декабря"
-				[(ngModel)]="Date"
-				(ionChange)="selectDate()"></ion-datetime>
+			  <ion-datetime
+				  displayFormat="DD MMMM YYYY"
+				  cancelText='Отмена'
+				  doneText='Готово'
+				  min='2017'
+				  max={{maxDate}}
+				  monthNames="января, февраля, марта, апреля, мая, июня, июля, августа, сентября, октября, ноября, декабря"
+				  [(ngModel)]="Date"
+				  (ionChange)="selectDate()"></ion-datetime>
 			</ion-item>
 		</ion-card-content>
 	</ion-card>
 	<ion-card *ngIf="isNull">
-		<ion-card-content>
-			{{message}}
-		</ion-card-content>
+		<ion-card-content>{{message}}</ion-card-content>
 	</ion-card>
 	<ion-list *ngIf="!isNull">
     <ion-list-header><h1>{{dat}}, отсутствовали</h1></ion-list-header>

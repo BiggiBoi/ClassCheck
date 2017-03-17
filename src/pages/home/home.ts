@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {NavController, LoadingController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
 
 @Component({
@@ -22,7 +22,6 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    private loadCtrl: LoadingController,
     private Service: ClassCheckService) {}
 
   ionViewDidLoad() {
@@ -78,14 +77,13 @@ export class HomePage {
   saveAttend(){
     this.Service.saveAttend(this.dates,this.localeDate,this.outClass, this.inClass);
     this.isEdit = false;
-	this.isSave = true;
-	
+	  this.isSave = true;
   }
 
   setEdit(){
     this.isEdit = true;
   }
-  
+
   private splitDate(){
 	let temp = this.Date.split('T');
 	return temp[0];

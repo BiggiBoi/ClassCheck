@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as PouchDB from 'pouchdb';
 import { ClassList } from '../providers/classlist';
 import { Attendance } from '../providers/attendance';
+import {ToastController} from "ionic-angular";
 
 @Injectable()
 export class ClassCheckService {
@@ -13,6 +14,17 @@ export class ClassCheckService {
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
 	}
+
+	constructor(private toastCtrl: ToastController) {}
+
+	toast(){
+	 let toast = this.toastCtrl.create({
+	   message: 'сохранено',
+     duration: 3000,
+     position: 'bottom'
+   });
+    toast.present();
+  }
 
   addPupil(pupil:any){
     if (this.class._id === undefined){
@@ -100,12 +112,13 @@ export class ClassCheckService {
 		let attend:any = {};
 		attend._id = _id;
 		attend.date = date;
-		if(this.attendance._rev !== undefined){
+		if(this.attendance !== null){
 		  attend._rev = this.attendance._rev
 		}
 		attend.outClass = outClass;
 		attend.inClass = inClass;
 		this._db.put(attend);
+    this.toast();
 	}
 
 }

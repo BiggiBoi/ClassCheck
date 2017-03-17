@@ -3,12 +3,6 @@ import {NavController, NavParams, ModalController} from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
 import { AddStudentPage } from '../../pages/add-student/add-student';
 import { ClassList } from '../../providers/classlist';
-/*
- Generated class for the AddStudent page.
-
- See http://ionicframework.com/docs/v2/components/#navigation for more info on
- Ionic pages and navigation.
- */
 @Component({
   selector: 'page-view-class',
   templateUrl: 'view-class.html'
