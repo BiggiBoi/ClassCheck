@@ -1,6 +1,6 @@
 export class Attendance {
 	_id:string;
 	_rev:string;
-	outClass:any[] = [];
-	inClass:any[] = [];
+	outClass: Array <{id: number, lastName:string, firstName:string}>;
+	inClass:  Array <{id: number, lastName:string, firstName:string}>;
 }

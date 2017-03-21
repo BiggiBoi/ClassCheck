@@ -13,7 +13,7 @@ import { HistoryPage } from '../pages/history/history';
     HomePage,
     ViewClassPage,
   	AddStudentPage,
-	HistoryPage
+	  HistoryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,8 +23,8 @@ import { HistoryPage } from '../pages/history/history';
     MyApp,
     HomePage,
     ViewClassPage,
-	AddStudentPage,
-	HistoryPage
+	  AddStudentPage,
+	  HistoryPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ClassCheckService]
 })

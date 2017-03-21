@@ -7,7 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-card *ngIf="isCreate">
     <ion-card-content>
     <ion-grid>
@@ -23,7 +23,7 @@
   </ion-card-content>
   </ion-card>
   <ion-card *ngIf="!isCreate">
-    <ion-card-content>
+    <ion-card-content no-padding>
       <ion-grid>
         <ion-row>
           <ion-col width-50 center>{{localeDate}}</ion-col>
@@ -38,14 +38,14 @@
     </ion-card-content>
   </ion-card>
   <ion-list *ngIf="!isCreate">
-    <ion-list-header><h1>Отсутствуют</h1></ion-list-header>
-    <ion-item *ngFor="let out of outClass; let i = index" (click)="selectItem(out)">
-      {{i+1}}){{out.lastName}} {{out.firstName}}
+    <ion-list-header no-margin><h2>Отсутствуют</h2></ion-list-header>
+    <ion-item *ngFor="let out of outClass; let i = index" (click)="selectItem(out)" padding-right>
+      {{i+1}}) {{out.lastName}} {{out.firstName}}
     </ion-item>
     <span *ngIf="isEdit">
-      <ion-list-header><h1>Присутствуют</h1></ion-list-header>
-      <ion-item *ngFor="let in of inClass; let i = index" (click)="returnItem(in)">
-        {{i+1}}){{in.lastName}} {{in.firstName}}
+      <ion-list-header no-margin><h2>Присутствуют</h2></ion-list-header>
+      <ion-item *ngFor="let in of inClass; let i = index" (click)="returnItem(in)" padding-right>
+        {{i+1}}) {{in.lastName}} {{in.firstName}}
       </ion-item>
     </span>
   </ion-list>

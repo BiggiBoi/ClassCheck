@@ -23,7 +23,6 @@ export class HistoryPage {
   ionViewDidLoad() {
     this.Date= new Date().toISOString();
     this.maxDate = this.splitDate();
-    this.Service.initDB();
     this.selectDate()
   }
 

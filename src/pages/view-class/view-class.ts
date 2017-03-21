@@ -18,7 +18,6 @@ export class ViewClassPage {
   }
 
   ionViewDidLoad() {
-    this.Service.initDB();
     this.getPupil();
   }
 

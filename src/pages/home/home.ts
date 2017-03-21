@@ -28,7 +28,6 @@ export class HomePage {
     this.Date = new Date().toISOString();
     this.dates = this.splitDate();
     this.localeDate = new Date().toLocaleString("ru", {weekday: 'long',month: 'long', day: 'numeric'});
-    this.Service.initDB();
     this.loadData();
   }
 

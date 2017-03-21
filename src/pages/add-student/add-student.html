@@ -14,19 +14,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-    <ion-item>
+    <ion-item padding-right>
     <ion-label floating>Фамилия</ion-label>
     <ion-input type="text" value="" formControlName="lastName"></ion-input>
   </ion-item>
-  <div class="danger" *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">допустимы русские буквы без пробелов</div>
-  <ion-item>
+  <div *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched" padding-left>допустимы русские буквы без пробелов</div>
+  <ion-item padding-right>
     <ion-label floating>Имя</ion-label>
     <ion-input type="text" value="" formControlName="firstName"></ion-input>
   </ion-item>
-  <div class="danger" *ngIf="form.controls['lastName'].invalid && form.controls['firstName'].touched">допустимы русские буквы без пробелов</div>
-  <ion-buttons right>
+  <div *ngIf="form.controls['firstName'].invalid && form.controls['firstName'].touched" padding-left>допустимы русские буквы без пробелов</div>
+  <ion-buttons right padding>
     <button ion-button [disabled]="!form.valid">{{action}}</button>
   </ion-buttons>
   </form>

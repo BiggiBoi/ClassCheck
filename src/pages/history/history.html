@@ -7,9 +7,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 	<ion-card>
-		<ion-card-content>
+		<ion-card-content no-padding>
 			<ion-item>
 			  <ion-label>Выбрать дату</ion-label>
 			  <ion-datetime
@@ -28,9 +28,9 @@
 		<ion-card-content>{{message}}</ion-card-content>
 	</ion-card>
 	<ion-list *ngIf="!isNull">
-    <ion-list-header><h1>{{dat}}, отсутствовали</h1></ion-list-header>
-    <ion-item *ngFor="let out of outClass; let i = index">
-      {{i+1}}){{out.lastName}} {{out.firstName}}
+    <ion-list-header no-margin><h2>{{dat}}, отсутствовали</h2></ion-list-header>
+    <ion-item *ngFor="let out of outClass; let i = index" padding-right>
+      {{i+1}}) {{out.lastName}} {{out.firstName}}
     </ion-item>
 	</ion-list>
 </ion-content>
