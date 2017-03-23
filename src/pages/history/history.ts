@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { ClassCheckService } from '../../providers/class-check';
 @Component({
   selector: 'page-history',
@@ -10,7 +10,7 @@ export class HistoryPage {
 	private maxDate:any;
 	private dates:any;
 	private dat: any;
-	private outClass:any[];
+	private outClass:any;
 	private isNull:boolean=true;
 	private message:string;
 
