@@ -7,9 +7,9 @@ import {ToastController} from "ionic-angular";
 @Injectable()
 export class ClassCheckService {
 	private _db;
-  private class:ClassList = new ClassList();
-  private classList:ClassList = new ClassList();
-  public attendance:Attendance = new Attendance();
+  private class:ClassList// = new ClassList();
+  private classList:ClassList// = new ClassList();
+  public attendance:Attendance// = new Attendance();
 
 	initDB(){
 		this._db = new PouchDB ('studentList', {adapter: 'websql', auto_compaction: true})
@@ -79,7 +79,7 @@ export class ClassCheckService {
         });
        return ar;
     }
-
+    
   getClassList(){
     return this._db.allDocs({include_docs:true,key: 'classlist'})
       .then(data=>{
@@ -112,7 +112,8 @@ export class ClassCheckService {
 		let attend:any = {};
 		attend._id = _id;
 		attend.date = date;
-		if(this.attendance !== null){
+		console.log('rev', this.attendance);
+		if(this.attendance !== undefined){
 		  attend._rev = this.attendance._rev
 		}
 		attend.outClass = outClass;

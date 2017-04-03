@@ -24,11 +24,15 @@ export class HomePage {
     public navCtrl: NavController,
     private Service: ClassCheckService) {}
 
-  ionViewDidLoad() {
-    this.Date = new Date().toISOString();
-    this.dates = this.splitDate();
-    this.localeDate = new Date().toLocaleString("ru", {weekday: 'long',month: 'long', day: 'numeric'});
+  ionViewWillEnter(){
     this.loadData();
+  }
+
+  ionViewDidLoad() {
+   this.Date = new Date().toISOString();
+   this.dates = this.splitDate();
+   this.localeDate = new Date().toLocaleString("ru", {weekday: 'long',month: 'long', day: 'numeric'});
+     
   }
 
   selectItem(item:any) {

@@ -14,6 +14,7 @@ export class MyApp {
 @ViewChild(Nav) nav: Nav;
 
   rootPage = HomePage;
+  splash = true;
 
   pages: Array <{title: string, component: any}>;
 
@@ -24,7 +25,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      setTimeout(() => this.splash = false, 4000);
       this.Service.initDB();
+
     });
 
 	this.pages = [

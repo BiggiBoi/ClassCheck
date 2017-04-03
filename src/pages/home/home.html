@@ -8,34 +8,34 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="isCreate">
-    <ion-card-content>
+  <ion-card>
+    <ion-card-content no-padding>
     <ion-grid>
-      <ion-row>
-        <ion-col width-67 center>Записей не найдено</ion-col>
-        <ion-col width-33>
+      <ion-row *ngIf="isCreate">
+        <ion-col width-50 center>Записей не найдено</ion-col>
+        <ion-col width-50>
           <ion-buttons right>
             <button ion-button clear (click)="loadClassList()">Создать</button>
           </ion-buttons>
         </ion-col>
       </ion-row>
+      <ion-row *ngIf="!isCreate">
+        <ion-col width-50 center>{{localeDate}}</ion-col>
+        <ion-col width-50>
+          <ion-buttons right>
+            <button ion-button icon-only clear (click)="setEdit()" color="energized" *ngIf="isSave">
+              <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button icon-only clear (click)="saveAttend()" color="secondary">
+              <svg style="min-width: 28px;" viewBox="0 0 24 24">
+                <path fill="#32db64" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+              </svg>
+            </button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-card-content>
-  </ion-card>
-  <ion-card *ngIf="!isCreate">
-    <ion-card-content no-padding>
-      <ion-grid>
-        <ion-row>
-          <ion-col width-50 center>{{localeDate}}</ion-col>
-          <ion-col width-50>
-            <ion-buttons right>
-              <button ion-button clear (click)="setEdit()" color="energized" *ngIf="isSave">Редактировать</button>
-              <button ion-button clear (click)="saveAttend()" color="secondary">Сохранить</button>
-            </ion-buttons>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
   </ion-card>
   <ion-list *ngIf="!isCreate">
     <ion-list-header no-margin><h2>Отсутствуют</h2></ion-list-header>
