@@ -1,4 +1,4 @@
-export class Attendance {
+export interface Attendance {
 	_id:string;
 	_rev:string;
 	outClass: Array <{id: number, lastName:string, firstName:string}>;
